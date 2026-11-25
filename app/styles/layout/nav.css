@@ -1,0 +1,65 @@
+/* Fixed header — markup: components/layout/Header.js */
+
+/* ===================== Nav ===================== */
+
+body > nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: max(0.8rem, 2vw) max(0.8rem, 2.4vw);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  z-index: var(--z-nav); /* above the hero */
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+}
+
+/* Acts as a mask so the logo can slide up from below */
+.nav-item a {
+  overflow: hidden;
+  transition: color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .nav-item a:hover {
+    color: var(--orange);
+  }
+}
+
+/* Wide wordmark, so size it by height */
+.nav-item img {
+  width: auto;
+  height: clamp(1.9rem, 1.2rem + 1.6vw, 2.7rem);
+  object-fit: contain;
+  opacity: 0; /* start state: hidden behind the loader; animations/hero.js fades it in */
+  transform: translateY(100%); /* start state */
+  will-change: transform;
+}
+
+/* The wordmark, top-left (the empty first slot is folded away) */
+.nav-item:first-child {
+  display: none;
+}
+
+.nav-item:nth-child(2) {
+  justify-content: flex-start;
+}
+
+.nav-item:nth-child(3) {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* ===================== Mobile ===================== */
+
+/* Short landscape phones: smaller logo */
+@media (max-height: 500px) {
+  .nav-item img {
+    height: 1.75rem;
+  }
+}

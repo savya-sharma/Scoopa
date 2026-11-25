@@ -1,0 +1,127 @@
+/* Design tokens: fonts, colours, type scale, spacing, radii, layers, motion.
+   Change a value here and it updates everywhere it's used.
+
+   Breakpoints (CSS variables can't be used inside media queries, so these
+   are written out where needed):
+     phone         max-width: 699px
+     short screen  max-height: 500px (landscape phones)
+     hover         (hover: hover), for hover-only effects
+
+   Section compositions are drawn in "design units" so they keep their exact
+   shape at any width; those units live with their sections:
+     --d  1/1920 of the page width   (styles/sections/journey.css)
+     --s  1/1100 of the Product Details stage
+     --f  1/1920 of the footer */
+
+/* ===================== Fonts (public/fonts) ===================== */
+
+/* Lilita One: chunky rounded face, for labels, badges and small accents */
+@font-face {
+  font-family: "Lilita One";
+  src: url("/fonts/LilitaOne-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Bluescreens: tall, condensed poster face for the big headings */
+@font-face {
+  font-family: "Bluescreens";
+  src: url("/fonts/Bluescreens.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Fredoka Condensed: soft, rounded face for body copy and UI */
+@font-face {
+  font-family: "Fredoka Condensed";
+  src: url("/fonts/Fredoka_Condensed-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fredoka Condensed";
+  src: url("/fonts/Fredoka_Condensed-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  /* ----- Colour ----- */
+  --cream: #fff8e9; /* page background */
+  --blue: #102070; /* primary: text, navy fields */
+  --yellow: #ffc928;
+  --mint: #16a995;
+  --orange: #ff7138;
+  --pink: #ff4f9a;
+  --sun: #ffb524; /* Menu pill */
+  /* soft tints, for shapes behind products */
+  --pink-soft: #ffd3e4;
+  --mint-soft: #bfeadf;
+  --peach: #ffd9b8;
+
+  /* ----- Type families -----
+     Bluescreens is the site's one typeface: headings, body copy, labels,
+     badges and buttons all use it, except the hero headline, which keeps
+     Lilita One (--font-hero). (Fredoka Condensed is still declared above
+     but unused: point a family back at it to bring it back.) Bluescreens has a single weight, so the browser is told not
+     to fake a bold one (base.css). */
+  --font-heading: "Bluescreens", "Arial Narrow", sans-serif; /* the big headings */
+  --font-display: "Bluescreens", "Arial Narrow", sans-serif; /* labels, badges, accents */
+  --font-body: "Bluescreens", "Arial Narrow", sans-serif;
+  --font-hero: "Lilita One", "Bluescreens", sans-serif; /* the hero headline only */
+
+  /* ----- Type scale (fluid: phone → desktop) -----
+     The small sizes run about a fifth larger than usual: Bluescreens is very
+     narrow, so it needs the extra size to read comfortably. */
+  --text-label: clamp(0.9rem, 0.86rem + 0.12vw, 1rem); /* 14.4 → 16px */
+  --text-small: clamp(1.05rem, 1rem + 0.18vw, 1.2rem); /* 16.8 → 19.2px */
+  --text-body: clamp(1.2rem, 1.14rem + 0.3vw, 1.4rem); /* 19.2 → 22.4px */
+  --text-lead: clamp(1.35rem, 1.18rem + 0.7vw, 1.8rem); /* 21.6 → 28.8px */
+  --text-subheading: clamp(1.375rem, 1.15rem + 0.9vw, 2rem); /* 22 → 32px */
+  --text-heading: clamp(1.75rem, 1.05rem + 2.9vw, 3.5rem); /* 28 → 56px */
+
+  /* ----- Line height ----- */
+  --leading-display: 0.95; /* huge type */
+  --leading-heading: 1.12;
+  --leading-snug: 1.25; /* subheadings, statements, short copy in shapes */
+  --leading-body: 1.55;
+  --leading-ui: 1.2; /* buttons, labels */
+
+  /* ----- Letter spacing ----- */
+  --tracking-display: -0.01em;
+  --tracking-label: 0.08em; /* small uppercase labels */
+
+  /* ----- Spacing ----- */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  /* page edge spacing: 1.25rem on phones, up to 3rem on desktop */
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  /* ----- Shape ----- */
+  --radius-pill: 999px;
+  /* scallops: the hero's bottom edge, Our Story's top edge, Specials' bottom edge */
+  --scallop-w: 8.75rem; /* 140px: scallop width */
+  --scallop-d: 2.75rem; /* 44px: how far the scallops reach */
+
+  /* ----- Shadows ----- */
+  --shadow-sticker:
+    drop-shadow(0 1px 1px rgb(16 32 112 / 0.35))
+    drop-shadow(0 8px 10px rgb(16 32 112 / 0.25));
+
+  /* ----- Layers (z-index) ----- */
+  --z-hero-art: 10; /* the product and the glossy "OO" */
+  --z-hero-group: 11; /* the friends, in front of the art */
+  --z-loader: 20;
+  --z-nav: 30;
+  --z-menu: 40;
+  --z-transition: 100; /* the square wipe covers everything, menu included */
+
+  /* ----- Motion ----- */
+  --ease-bounce: cubic-bezier(0.3, 1.4, 0.5, 1);
+}

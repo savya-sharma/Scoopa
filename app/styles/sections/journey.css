@@ -1,0 +1,12 @@
+/* Wrapper of Brand Personality → Specials — app/page.js */
+
+/* ===================== Brand Personality → Specials ===================== */
+
+/* Wraps these sections; their sizes come from its width (container units) */
+.journey {
+  position: relative;
+  overflow-x: clip;
+  container-type: inline-size;
+  --d: calc(100cqw / 1920); /* one unit of the 1920-wide full-page design */
+}
+

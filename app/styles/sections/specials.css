@@ -1,0 +1,162 @@
+/* Specials — markup: components/sections/Specials.js · motion: animations/specials.js
+
+   The homepage's sign-off: the navy carries on from Our Story, and a wide
+   teal arch (semicircular top, straight sides, open at the bottom) rises out
+   of it, holding the closing statement. */
+
+.specials {
+  --arch-w: 100cqw; /* full width */
+  --arch-rise: calc(var(--arch-w) * 0.3); /* how tall the curved top is (a semicircle would be half the width) */
+  position: relative;
+  height: calc(1750 * var(--d)); /* the statement sits in the dome; the sides run on below it */
+  min-height: 34rem;
+  background-color: var(--blue); /* continues Our Story's navy above the arch */
+  z-index: 1;
+  /* the arch's teal runs straight on into the teal footer: one colour from
+     the closing statement to the bottom of the page */
+}
+
+/* The arch: centred, its top a gentle curve (half an ellipse, flatter than
+   a semicircle), running down to the bottom of the section */
+.specials-arch {
+  position: absolute;
+  top: max(calc(150 * var(--d)), 3rem);
+  bottom: 0;
+  left: calc(50% - var(--arch-w) / 2);
+  width: var(--arch-w);
+  border-radius: calc(var(--arch-w) / 2) calc(var(--arch-w) / 2) 0 0 / var(--arch-rise) var(--arch-rise) 0 0;
+  background-color: var(--mint);
+}
+
+/* ----- The closing statement, centred in the arch's dome ----- */
+.specials-statement {
+  position: absolute;
+  z-index: 1;
+  /* below the curved line: the arch's top + about a third of its width */
+  top: calc(max(calc(150 * var(--d)), 3rem) + var(--arch-rise) * 0.55);
+  left: 50%;
+  translate: -50% 0;
+  width: min(86%, 64rem);
+  text-align: center;
+  color: var(--blue);
+}
+
+.specials-heading {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-heading);
+  font-size: clamp(3.6rem, 1.2rem + 8.8vw, 12.5rem);
+  font-weight: 400;
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--blue);
+}
+
+/* each line rises out of its own mask; the second line in cream */
+.specials-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em;
+}
+
+.specials-line > span {
+  display: block;
+}
+
+.specials-line:nth-child(2) {
+  color: var(--cream);
+}
+
+.specials-text {
+  position: relative;
+  z-index: 1;
+  max-width: 34ch;
+  margin: clamp(1rem, 2vw, 1.75rem) auto 0;
+  font-size: var(--text-lead);
+  line-height: var(--leading-snug);
+  color: var(--blue);
+}
+
+/* ----- The treats around the statement ----- */
+.specials-treats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.specials-treat {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 1%);
+  width: calc(var(--size) * 1%);
+  aspect-ratio: 1;
+  filter: drop-shadow(0 14px 14px rgb(16 32 112 / 0.28)) drop-shadow(0 3px 3px rgb(16 32 112 / 0.2));
+  will-change: transform;
+}
+
+.specials-treat-float,
+.specials-treat-float svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Tablets and phones: the treats stay inside the arch (pulled in from the
+   sides, kept from rising too high) */
+@media (max-width: 1023px) {
+  .specials-treat {
+    left: calc(clamp(-2, var(--x), 90) * 1%);
+    top: calc(max(var(--y), -14) * 1%);
+  }
+}
+
+/* Phones: the statement fills more of the arch; fewer, larger treats */
+@media (max-width: 699px) {
+  .specials {
+    min-height: 40rem;
+  }
+
+  .specials {
+    --arch-rise: calc(var(--arch-w) * 0.4);
+  }
+
+  .specials-statement {
+    top: calc(3rem + var(--arch-rise) * 0.7);
+    width: 88%;
+  }
+
+  .specials-treat {
+    left: calc(var(--px) * 1%);
+    top: calc(var(--py) * 1%);
+    width: calc(var(--size) * 1.35%);
+  }
+
+  .specials-treat--wide {
+    display: none;
+  }
+}
+
+/* ----- Inner pages: a scalloped top (components/sections/Specials.js, scalloped) -----
+   Where it follows a cream or yellow section instead of Our Story, its navy
+   rises into that section with scallops, as Our Story's does; the arch and
+   statement move down by the scallops' depth to keep their navy margin. */
+.specials--scalloped {
+  --gap: max(calc(150 * var(--d)), 3rem); /* the navy above the arch */
+  margin-top: calc(var(--scallop-d) * -1);
+  height: calc(1750 * var(--d) + var(--scallop-d));
+  -webkit-mask:
+    radial-gradient(ellipse 50% 100% at 50% 100%, #000 98%, #0000 100%) 50% 0 / var(--scallop-w) var(--scallop-d) repeat-x,
+    linear-gradient(#000 0 0) 0 calc(var(--scallop-d) - 1px) / 100% 100% no-repeat;
+  mask:
+    radial-gradient(ellipse 50% 100% at 50% 100%, #000 98%, #0000 100%) 50% 0 / var(--scallop-w) var(--scallop-d) repeat-x,
+    linear-gradient(#000 0 0) 0 calc(var(--scallop-d) - 1px) / 100% 100% no-repeat;
+}
+
+.specials--scalloped .specials-arch {
+  top: calc(var(--gap) + var(--scallop-d));
+}
+
+.specials--scalloped .specials-statement {
+  top: calc(var(--gap) + var(--scallop-d) + var(--arch-rise) * 0.55);
+}

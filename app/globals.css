@@ -1,0 +1,27 @@
+/* Scoopa styles, in cascade order (later files win ties).
+   tokens → base → layout and sections, top of the page to the bottom → shared UI */
+
+@import "./styles/tokens.css";
+@import "./styles/base.css";
+
+@import "./styles/layout/nav.css";
+@import "./styles/layout/menu.css";
+@import "./styles/layout/page-hero.css";
+@import "./styles/layout/placeholder.css";
+
+@import "./styles/sections/hero.css";
+@import "./styles/sections/flavours.css";
+@import "./styles/sections/journey.css";
+@import "./styles/sections/brand-personality.css";
+@import "./styles/sections/product-details.css";
+@import "./styles/sections/our-story.css";
+@import "./styles/sections/specials.css";
+
+@import "./styles/layout/footer.css";
+
+@import "./styles/ui/stickers.css";
+@import "./styles/ui/ingredients.css";
+@import "./styles/ui/shapes.css";
+@import "./styles/ui/ticket.css";
+@import "./styles/ui/checker.css";
+@import "./styles/ui/transition.css";

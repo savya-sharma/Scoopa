@@ -1,0 +1,167 @@
+/* Inner pages' title band — markup: components/layout/PageHero.js · motion: animations/pageIntro.js */
+
+/* ===================== Page hero ===================== */
+
+/* The band, the same navy awning as the homepage hero (scalloped edge
+   included). Behind the awning, the colour of the section below fills the
+   space between the scallops, so the two meet cleanly. Above the next
+   section (z-index), which the character hangs into. */
+.page-hero {
+  --below: var(--cream);
+  position: relative;
+  z-index: 2;
+  display: grid;
+  align-items: end;
+  min-height: min(56rem, 94svh);
+  padding: clamp(8rem, 13vw, 12rem) var(--gutter) calc(var(--scallop-d) + clamp(3.5rem, 7vw, 7rem));
+  background-color: var(--below);
+}
+
+.page-hero[data-below="yellow"] {
+  --below: var(--yellow);
+}
+
+.page-hero[data-below="mint"] {
+  --below: var(--mint);
+}
+
+.page-hero-awning {
+  position: absolute;
+  inset: 0;
+  background-color: var(--blue);
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--scallop-d) + 1px) no-repeat,
+    radial-gradient(ellipse 50% 100% at 50% 0, #000 98%, #0000 100%)
+      50% 100% / var(--scallop-w) var(--scallop-d) repeat-x;
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - var(--scallop-d) + 1px) no-repeat,
+    radial-gradient(ellipse 50% 100% at 50% 0, #000 98%, #0000 100%)
+      50% 100% / var(--scallop-w) var(--scallop-d) repeat-x;
+}
+
+/* ----- The copy, bottom-left ----- */
+
+.page-hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: min(100%, 64rem);
+}
+
+/* The yellow tag, tilted like a sticker */
+.page-hero-label {
+  display: inline-block;
+  margin-bottom: clamp(1rem, 2vw, 1.75rem);
+  padding: 0.4em 0.9em 0.3em;
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 0.75rem + 0.4vw, 1.15rem);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--blue);
+  background-color: var(--yellow);
+  border-radius: var(--radius-pill);
+  rotate: -4deg;
+  opacity: 0; /* start state: pops on (animations/pageIntro.js) */
+}
+
+.page-hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 1rem + 12.5vw, 13.5rem);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: var(--tracking-display);
+  color: var(--cream);
+}
+
+/* Each line is a mask its words rise out of */
+.page-hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em; /* room for descenders inside the mask */
+}
+
+.page-hero-line > span {
+  display: inline-block;
+  transform: translateY(105%); /* start state */
+  will-change: transform;
+}
+
+/* the last line in yellow */
+.page-hero-line:last-child > span {
+  color: var(--yellow);
+}
+
+.page-hero-intro {
+  max-width: 31rem;
+  margin-top: clamp(1.25rem, 2.4vw, 2rem);
+  font-size: var(--text-lead);
+  font-weight: 500;
+  line-height: var(--leading-snug);
+  color: var(--cream);
+  opacity: 0; /* start state */
+  transform: translateY(1rem); /* start state */
+}
+
+/* ----- The character, right, hanging over the scallops ----- */
+
+.page-hero-figure {
+  position: absolute;
+  right: clamp(1rem, 6vw, 7rem);
+  bottom: calc(clamp(2.5rem, 6vw, 6rem) * -1);
+  width: clamp(9.5rem, 26vw, 25rem);
+  aspect-ratio: 3 / 4;
+  pointer-events: none;
+}
+
+/* A starburst behind it, in the page's colour */
+.page-hero-burst {
+  position: absolute;
+  left: -14%;
+  top: 2%;
+  width: 92%;
+  color: var(--pink);
+  opacity: 0; /* start state */
+  overflow: visible;
+}
+
+.page-hero[data-page="flavours"] .page-hero-burst {
+  color: var(--orange);
+}
+
+.page-hero[data-page="personality"] .page-hero-burst {
+  color: var(--mint);
+}
+
+.page-hero[data-page="contact"] .page-hero-burst {
+  color: var(--yellow);
+}
+
+.page-hero-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: var(--shadow-sticker);
+  opacity: 0; /* start state: swings up into place */
+  transform: translateY(30%) rotate(8deg); /* start state */
+  will-change: transform;
+}
+
+/* ===================== Phones ===================== */
+
+/* The copy takes the full width; the character sits smaller, bottom-right,
+   overlapping the scallops, clear of the text */
+@media (max-width: 699px) {
+  .page-hero {
+    min-height: 0; /* as tall as its copy: no empty navy above the title */
+    padding-top: 8.5rem;
+    padding-bottom: calc(var(--scallop-d) + 9.5rem);
+  }
+
+  .page-hero-figure {
+    right: var(--gutter);
+    bottom: calc(var(--scallop-d) * -1.2);
+    width: 8.5rem;
+  }
+}

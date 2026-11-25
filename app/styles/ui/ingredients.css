@@ -1,0 +1,42 @@
+/* Footer ingredients — markup: components/layout/Footer.js · motion: animations/ingredients.js
+
+   A layer filling the footer, behind its content: ingredients launch from
+   below the bottom edge, bounce and fall back out of sight. It never takes
+   clicks, and it's clipped to the footer so nothing pokes out of it.
+   (Kept in its own file: the footer's own styles are untouched.) */
+
+/* Stacking, back to front: the footer's yellow, the big wordmark, the
+   ingredients, then the text, links and form (so the ingredients pass in
+   front of the wordmark but never over anything to read or press).
+   isolation: the footer as its own stacking context (no visual change). */
+.footer:has(> .footer-ingredients) {
+  isolation: isolate;
+}
+
+.footer:has(> .footer-ingredients) :is(.footer-title, .footer-form, .footer-sign-top, .footer-statement) {
+  position: relative;
+  z-index: 2;
+}
+
+.footer-ingredients {
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* over the wordmark (unpositioned), under the text above */
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict; /* its motion never makes the page re-lay out */
+}
+
+/* Each ingredient: anchored to the bottom-left corner and moved by
+   transform only. Hidden until launched (and with reduced motion, never
+   shown). */
+.footer-ingredient {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 4rem; /* re-set per launch from the footer's width */
+  height: auto;
+  visibility: hidden;
+  will-change: transform;
+  user-select: none;
+}

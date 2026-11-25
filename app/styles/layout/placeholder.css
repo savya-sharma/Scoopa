@@ -1,0 +1,19 @@
+/* A page not built yet — markup: components/layout/PagePlaceholder.js */
+
+/* The page's name, centred on the cream, one screen tall */
+.placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: 8rem var(--gutter);
+  text-align: center;
+}
+
+.placeholder-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3.5rem, 1rem + 9vw, 10rem);
+  font-weight: 400;
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--blue);
+}

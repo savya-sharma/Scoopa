@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 84" fill="none" stroke="#102070" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+  <!-- cone -->
+  <path d="M12 42 L52 42 L32 81 Z" fill="#FFC928"/>
+  <path d="M22 42 L38 69 M42 42 L26 69" stroke-width="2"/>
+  <!-- side scoops -->
+  <circle cx="21" cy="38" r="11" fill="#16A995"/>
+  <circle cx="43" cy="38" r="11" fill="#FF7138"/>
+  <!-- top scoop -->
+  <circle cx="32" cy="25" r="14" fill="#FFF8E9"/>
+  <!-- sprinkles -->
+  <path d="M25 22 l3 -2" stroke="#FF7138"/>
+  <path d="M35 19 l3 2" stroke="#16A995"/>
+  <path d="M31 29 l3 1" stroke="#FFC928"/>
+  <!-- cherry -->
+  <path d="M33 7 q2 -4 6 -5" stroke-width="2"/>
+  <circle cx="32" cy="10" r="4" fill="#FF7138"/>
+</svg>

@@ -1,0 +1,67 @@
+/* Decorative shapes — markup: components/ui/Shapes.js · motion: animations/decor.js */
+
+/* ===================== Shapes (components/ui/Shapes.js) ===================== */
+
+.shape {
+  position: absolute;
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.shape svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* the eyes are a little taller than wide */
+.shape:has(use[href="#shape-eyes"]) {
+  aspect-ratio: 200 / 220;
+}
+
+/* Text set inside a shape (starburst badges) */
+.shape-label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20%;
+  font-family: var(--font-display);
+  line-height: 1;
+  text-align: center;
+  color: var(--cream);
+}
+
+/* (Brand Personality's eyes and stamp: styles/sections/brand-personality.css) */
+
+/* ----- Our Story: a flower in the bottom-left corner ----- */
+.story-flower {
+  left: calc(-150 * var(--d));
+  bottom: calc(140 * var(--d));
+  width: calc(440 * var(--d));
+  color: var(--pink);
+  opacity: 0.9;
+}
+
+/* ----- Footer: a starburst greeting beside the form ----- */
+.footer-burst {
+  left: calc(50% + 380 * var(--f));
+  top: calc(560 * var(--f));
+  width: max(calc(230 * var(--f)), 6rem);
+  color: var(--pink);
+  rotate: 12deg;
+}
+
+.footer-burst .shape-label {
+  font-size: max(calc(48 * var(--f)), 1.1rem);
+}
+
+/* ----- Phones ----- */
+@media (max-width: 699px) {
+  /* no room beside the copy and stickers on phones */
+  .footer-burst,
+  .story-flower {
+    display: none;
+  }
+}

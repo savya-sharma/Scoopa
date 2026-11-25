@@ -1,0 +1,103 @@
+/* Our Story — markup: components/sections/OurStory.js · motion: animations/story.js */
+
+/* ===================== Our Story ===================== */
+
+/* Orange, running on from the orange under Brand Personality's curved
+   yellow band, with a checker border along the bottom
+   (app/styles/ui/checker.css) */
+.story {
+  position: relative;
+  background-color: var(--orange);
+  /* tucked a pixel under Brand Personality, so no hairline shows where the
+     two oranges meet (heights in vw land on fractions of a pixel) */
+  margin-top: -1px;
+}
+
+/* The mouse trail (animations/story.js): stickers placed at the pointer,
+   behind the statement. Hidden until placed; they never catch the pointer. */
+.story-trail {
+  position: absolute;
+  z-index: 0; /* its own layer: the stickers stack among themselves, all under the statement */
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.story-trail img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: clamp(5.5rem, 9vw, 9.5rem);
+  height: auto;
+  visibility: hidden;
+  filter: var(--shadow-sticker);
+  will-change: transform;
+}
+
+/* The statement and its button, centred in the orange */
+.story-body {
+  position: relative;
+  z-index: 1; /* over the trail */
+  display: grid;
+  justify-items: center;
+  padding: 11vw var(--gutter) 8.5vw;
+  text-align: center;
+}
+
+/* Big cream lines in the condensed heading face */
+.story-text {
+  font-family: var(--font-heading);
+  font-size: clamp(2.6rem, 0.5rem + 9vw, 8.5rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: var(--tracking-display);
+  color: var(--cream);
+}
+
+/* Each line rises out of its own mask (animations/story.js) */
+.story-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em;
+}
+
+.story-line > span {
+  display: inline-block;
+}
+
+/* A teal pill (every button on the site is a pill) */
+.story-cta {
+  display: inline-block;
+  margin-top: 5vw;
+  padding: 0.65em 2em 0.55em;
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 0.6rem + 0.8vw, 1.4rem);
+  letter-spacing: 0.05em;
+  color: var(--cream);
+  background-color: var(--mint);
+  border-radius: var(--radius-pill);
+  transition: background-color 0.25s ease;
+}
+
+@media (hover: hover) {
+  .story-cta:hover {
+    background-color: var(--blue);
+  }
+}
+
+.story-cta:focus-visible {
+  outline: 3px solid var(--cream);
+  outline-offset: 3px;
+}
+
+/* ===================== Phones ===================== */
+
+@media (max-width: 699px) {
+  .story-body {
+    padding-block: 18vw 14vw;
+  }
+
+  .story-cta {
+    margin-top: 8vw;
+  }
+}

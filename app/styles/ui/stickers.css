@@ -1,0 +1,154 @@
+/* Stickers — markup: components/ui/Sticker.js · motion: animations/stickers.js */
+
+/* ===================== Stickers (corner peels open on scroll: animations/stickers.js) ===================== */
+
+.sticker {
+  position: absolute;
+  z-index: 1;
+  width: clamp(80px, 9vw, 150px);
+  perspective: 600px;
+  pointer-events: none;
+}
+
+/* ----- The peel rig (animations/stickers.js) -----
+   A square holding the artwork (contained, so its aspect ratio is kept).
+   --peel-s (its size) and --peel-d (its diagonal) are set in px by the script. */
+.peel {
+  position: relative;
+  aspect-ratio: 1;
+  transform-style: preserve-3d;
+}
+
+/* The stuck part. The shadow sits on a wrapper, so it follows the face as
+   clipped at the fold */
+.peel-stuck {
+  position: absolute;
+  inset: 0;
+  filter: var(--shadow-sticker);
+}
+
+.peel-face {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Shadow cast by the lifted flap, kept to the sticker's own silhouette */
+.peel-shadow {
+  position: absolute;
+  inset: 0;
+  -webkit-mask: var(--src) center / contain no-repeat;
+  mask: var(--src) center / contain no-repeat;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* The flap's frame: a point at the sticker's centre, turned towards the peel
+   corner, so each strip bends about its own vertical edge */
+.peel-frame {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+/* A strip of the flap, as tall as the sticker's diagonal, hinged on its left
+   edge to the previous strip's right edge */
+.peel-strip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: var(--peel-d);
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+}
+
+.peel-frame > .peel-strip {
+  top: calc(var(--peel-d) / -2);
+}
+
+/* Front (artwork) and back (underside) of a strip: only the side facing the
+   viewer shows */
+.peel-side {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.peel-side--back {
+  transform: rotateY(180deg);
+}
+
+/* The whole sticker image, placed so its piece lines up inside the strip */
+.peel-art {
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+}
+
+.peel-art::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--peel-s) / -2);
+  top: calc(var(--peel-s) / -2);
+  width: var(--peel-s);
+  height: var(--peel-s);
+  background: var(--src) center / contain no-repeat;
+}
+
+/* The underside: the sticker's silhouette in its backing paper, with a soft
+   sheen across it */
+.peel-side--back .peel-art::before {
+  background: linear-gradient(135deg, #fbf6ec, #e6dcc6 60%, #f3ecdd);
+  -webkit-mask: var(--src) center / contain no-repeat;
+  mask: var(--src) center / contain no-repeat;
+}
+
+/* Each sticker belongs to its section heading: the heading sits in a
+   .titled wrapper (styles/base.css) that hugs its text, and the sticker is
+   placed against the wrapper's edges, so it stays attached at every size */
+
+.sticker--title {
+  top: 0;
+  width: clamp(90px, 9.4vw, 156px);
+}
+
+/* straddling the heading's top-right corner, overlapping its top edge a little */
+.sticker--title-right {
+  left: 100%;
+  translate: -25% -78%;
+}
+
+/* straddling the heading's top-left corner */
+.sticker--title-left {
+  right: 100%;
+  translate: -2% -70%;
+}
+
+/* centred above the heading, just clear of it */
+.sticker--title-top {
+  left: 50%;
+  translate: -50% calc(-100% - 0.6rem);
+}
+
+@media (max-width: 699px) {
+  .sticker--title {
+    width: 72px;
+  }
+
+  /* corners are tight on phones: tuck the stickers further in */
+  .sticker--title-right {
+    translate: -75% -95%; /* kept on screen beside the wide heading */
+  }
+
+  /* the section clips its top edge: sit beside the first line instead */
+  .sticker--title-left {
+    width: 44px;
+    translate: -4px -10%;
+  }
+}

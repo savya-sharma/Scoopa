@@ -1,0 +1,309 @@
+/* Hero and loader — markup: components/sections/Hero.js · motion: animations/hero.js */
+
+/* ===================== Hero ===================== */
+
+/* An orange stage. Everything is placed in vw from these values, so the
+   composition keeps its proportions at any width; phones re-set them below.
+   The "OO" hangs on below the hero (--hero-h) into the next section. */
+.hero {
+  --hero-h: 73vw;
+  --title-top: 13.5vw; /* the headline's top */
+  --title-size: 9.1vw; /* two lines, centred */
+  --squiggle-top: 13vw; /* the wavy side lines */
+  --squiggle-w: 7.4vw;
+  --band-top: 40vw; /* the curving yellow band (its SVG box: 100 × 30 units) */
+  --group-w: 47vw; /* the friends, in the lower left */
+  --group-left: 5vw;
+  --group-top: 37vw;
+  --oo-w: 36vw; /* the glossy "OO", under the friends */
+  --oo-left: 11.6vw;
+  --oo-top: 52.5vw;
+  position: relative;
+  width: 100%;
+  height: var(--hero-h);
+  background-color: var(--orange);
+  overflow-x: clip; /* the side lines and the band run off the edges */
+  z-index: 2; /* above the next section, which the "OO" hangs into */
+}
+
+/*
+  Stacking order, back to front:
+  1  the headline
+  2  the wavy side lines
+  3  the text stickers
+  5  the yellow band
+  10 the "OO"
+  11 the friends, in front of the "OO"
+  20 loader overlay (the concentric circles; covers everything while loading)
+*/
+
+/* ---------- The headline ---------- */
+
+/* Two centred lines in Lilita One, the chunky rounded display face (the one
+   place it's kept: the rest of the site is Bluescreens). Each letter rises
+   out of its line's mask (animations/hero.js). */
+.hero-title {
+  position: absolute;
+  top: var(--title-top);
+  left: 0;
+  right: 0;
+  display: grid;
+  justify-items: center;
+  font-family: var(--font-hero);
+  font-size: var(--title-size);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  color: var(--cream);
+  white-space: nowrap;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* one line: the mask its letters rise out of */
+.hero-title-line {
+  display: flex;
+  gap: 0.24em; /* the space between the words */
+  overflow: hidden;
+  padding-block: 0.04em 0.02em;
+}
+
+.hero-title-word {
+  display: flex;
+}
+
+.hero-title-char {
+  display: inline-block;
+  transform: translateY(110%); /* start state */
+  will-change: transform;
+}
+
+/* ---------- The text stickers over the headline ---------- */
+
+/* Small navy pills with a thin cream edge, each centred on its point
+   (offsets from the headline's top, so they follow it on phones). Tilted
+   by --rot: animations/hero.js pops them on to it (GSAP owns their transform) */
+.hero-tag {
+  position: absolute;
+  left: var(--x);
+  top: calc(var(--title-top) + var(--y));
+  translate: -50% -50%;
+  padding: 0.7em 2em 0.6em;
+  font-family: var(--font-display);
+  font-size: clamp(0.6rem, 1.25vw, 1.2rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--cream);
+  background-color: var(--bg, var(--blue));
+  border: 2px solid rgb(255 248 233 / 0.85);
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgb(16 32 112 / 0.25);
+  z-index: 3;
+  pointer-events: none;
+  transform: scale(0); /* start state: pops on (animations/hero.js) */
+}
+
+/* Each its own colour (--bg) and resting tilt (--rot); once on, each
+   wobbles a few degrees either side of its tilt (animations/hero.js) */
+
+/* by "THE", over its lower half: navy */
+.hero-tag--1 {
+  --x: 15.7vw;
+  --y: 8.8vw;
+  --rot: -12deg;
+  --bg: var(--blue);
+}
+
+/* above the end of the first line: pink */
+.hero-tag--2 {
+  --x: 85.8vw;
+  --y: 0.5vw;
+  --rot: -8deg;
+  --bg: var(--pink);
+}
+
+/* under the "Y" of "CREAMY": mint */
+.hero-tag--3 {
+  --x: 56.8vw;
+  --y: 18.8vw;
+  --rot: 7deg;
+  --bg: var(--mint);
+}
+
+/* ---------- The wavy double lines at the sides ---------- */
+
+/* Yellow, running off the screen edge; drawn along their length
+   (stroke-dashoffset, animations/hero.js) */
+.hero-squiggle {
+  position: absolute;
+  top: var(--squiggle-top);
+  width: var(--squiggle-w);
+  height: auto;
+  aspect-ratio: 80 / 250;
+  overflow: visible;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-squiggle--left {
+  left: -1.5vw;
+}
+
+/* the same lines, mirrored */
+.hero-squiggle--right {
+  right: -1.5vw;
+  scale: -1 1;
+}
+
+.hero-squiggle-line {
+  fill: none;
+  stroke: var(--yellow);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1; /* start state: undrawn */
+}
+
+/* ---------- The curving yellow band and its marquee ---------- */
+
+/* Full width; its path dips down behind the friends and rises to the right.
+   The words run along it endlessly (startOffset, animations/hero.js). */
+.hero-band {
+  position: absolute;
+  left: 0;
+  top: var(--band-top);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 100 / 30;
+  overflow: visible;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0; /* start state */
+}
+
+.hero-band-stroke {
+  fill: none;
+  stroke: var(--yellow);
+  stroke-width: 6.2; /* the band's thickness, in % of the hero's width */
+}
+
+.hero-band-text {
+  font-family: var(--font-display);
+  font-size: 3.3px; /* in viewBox units: % of the hero's width */
+  letter-spacing: 0.02em;
+  fill: var(--cream);
+}
+
+/* ---------- Loader: three concentric circles (animated by animations/hero.js) ----------
+   A blank cream screen; from its centre three circles grow in turn, each
+   until it covers the screen: orange, then teal, then navy. Finally a
+   circular opening grows from the centre to reveal the hero. */
+.hero-overlay {
+  --loader-navy: #102d70;
+  --loader-teal: #16a995;
+  --loader-orange: #ff6b35;
+  --hole: -1px; /* radius of the opening onto the hero (animated) */
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  overflow: hidden;
+  background-color: var(--cream);
+  -webkit-mask: radial-gradient(circle at 50% 50%, #0000 var(--hole), #000 calc(var(--hole) + 1px));
+  mask: radial-gradient(circle at 50% 50%, #0000 var(--hole), #000 calc(var(--hole) + 1px));
+}
+
+/* Each circle is centred by position (not translate, which GSAP's scaling
+   would interfere with), so all three share exactly one centre.
+   --size: the outer circle's diameter; the others are proportions of it. */
+.loader-circle {
+  --size: min(52vmin, 26rem);
+  --d: var(--size); /* this circle's diameter */
+  position: absolute;
+  left: calc(50% - var(--d) / 2);
+  top: calc(50% - var(--d) / 2);
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+  transform-origin: 50% 50%;
+  transform: scale(0); /* start state: grows from the centre */
+  will-change: transform;
+}
+
+.loader-circle--orange {
+  background-color: var(--loader-orange);
+}
+
+.loader-circle--teal {
+  --d: calc(var(--size) * 0.68);
+  background-color: var(--loader-teal);
+}
+
+.loader-circle--navy {
+  --d: calc(var(--size) * 0.38);
+  background-color: var(--loader-navy);
+}
+
+/* ---------- The friends and the "OO" ---------- */
+
+/* The glossy "OO", in the lower left, hanging below the hero into the next
+   section */
+.hero-oo {
+  position: absolute;
+  top: var(--oo-top);
+  left: var(--oo-left);
+  width: var(--oo-w);
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: var(--z-hero-art);
+  opacity: 0; /* start state */
+  transform: translateY(40%); /* start state */
+  will-change: transform, opacity;
+}
+
+/* The friends, sitting on the "OO" */
+.hero-group {
+  position: absolute;
+  top: var(--group-top);
+  left: var(--group-left);
+  width: var(--group-w);
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: var(--z-hero-group);
+  opacity: 0; /* start state */
+  transform: translateY(40%); /* start state */
+  will-change: transform, opacity;
+}
+
+/* ===================== Phones ===================== */
+
+/* Taller, so each part gets room: the headline under the header, then the
+   friends (nearly full width, centred) on the "OO", the band behind them */
+@media (max-width: 699px) {
+  .hero {
+    --hero-h: 150vw;
+    --title-top: 30vw;
+    --title-size: 9.6vw; /* the first line just fits the width */
+    --squiggle-top: 24vw;
+    --squiggle-w: 9vw;
+    --band-top: 78vw;
+    --group-w: 96vw;
+    --group-left: 2vw;
+    --group-top: 66vw;
+    --oo-w: 62vw;
+    --oo-left: 18vw;
+    --oo-top: 113vw;
+  }
+
+  /* the end sticker pulled in from the screen edge, and up off "FRESH" */
+  .hero-tag--2 {
+    --x: 80vw;
+    --y: -4vw;
+  }
+
+  .hero-tag {
+    font-size: 0.6rem;
+  }
+}

@@ -1,0 +1,170 @@
+/* Footer — markup: components/layout/Footer.js */
+
+/* ===================== Footer ===================== */
+
+.footer {
+  position: relative;
+  container-type: inline-size;
+  overflow-x: clip;
+  /* yellow, under Our Story's checker border */
+  background-color: var(--yellow);
+  color: var(--cream);
+}
+
+/* With the contact form: its big heading needs room above it */
+.footer--contact {
+  padding-top: clamp(5rem, 9vw, 9rem);
+}
+
+.footer > * {
+  --f: calc(100cqw / 1920);
+}
+
+.footer-title {
+  font-family: var(--font-heading);
+  font-size: calc(475 * var(--f)); /* fills the width in the condensed heading face */
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--cream);
+}
+
+.footer-form {
+  display: grid;
+  gap: max(calc(18 * var(--f)), 0.6rem);
+  width: min(calc(100% - 2 * var(--gutter)), max(calc(630 * var(--f)), 22rem));
+  margin: max(calc(60 * var(--f)), 1.5rem) auto 0;
+}
+
+.footer-ask {
+  margin-bottom: max(calc(10 * var(--f)), 0.4rem);
+  font-size: max(calc(48 * var(--f)), 1.2rem);
+  font-weight: 500;
+  text-align: center;
+  color: var(--blue); /* (on the yellow footer) */
+}
+
+.footer-form input,
+.footer-form textarea {
+  width: 100%;
+  padding: 0 0.8em;
+  font: inherit;
+  font-size: max(calc(36 * var(--f)), 1rem);
+  font-weight: 500;
+  color: var(--blue);
+  background-color: #d9d9d9;
+  border: 2px solid var(--mint);
+  border-radius: var(--radius-pill);
+}
+
+.footer-form input {
+  height: max(calc(76 * var(--f)), 2.75rem);
+}
+
+.footer-form textarea {
+  height: max(calc(296 * var(--f)), 9rem);
+  padding-top: 0.5em;
+  border-radius: max(calc(46 * var(--f)), 1.25rem);
+  resize: vertical;
+}
+
+.footer-form ::placeholder {
+  color: #111;
+}
+
+.footer-form :focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.footer-form button {
+  height: max(calc(76 * var(--f)), 2.75rem);
+  font: inherit;
+  font-size: max(calc(36 * var(--f)), 1rem);
+  font-weight: 500;
+  color: var(--cream);
+  background-color: var(--blue); /* (on the yellow footer) */
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.footer-form button:hover {
+  background-color: var(--orange);
+}
+
+/* ----- The sign-off: links, copyright, brand line, wordmark (all cream) ----- */
+.footer-sign {
+  padding: max(calc(160 * var(--f)), 3rem) max(calc(64 * var(--f)), var(--gutter)) max(calc(40 * var(--f)), 1.25rem);
+  color: var(--cream);
+}
+
+/* after the contact form (when shown), less room above */
+.footer--contact .footer-sign {
+  padding-top: max(calc(90 * var(--f)), 2.5rem);
+}
+
+/* links on the left, copyright on the right, over a thin cream rule */
+.footer-sign-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  padding-bottom: max(calc(14 * var(--f)), 0.6rem);
+  border-bottom: 1px solid rgb(255 248 233 / 0.85);
+}
+
+.footer-links {
+  display: flex;
+  gap: max(calc(36 * var(--f)), 1rem);
+  list-style: none;
+}
+
+.footer-links a {
+  font-family: var(--font-heading);
+  font-size: max(calc(54 * var(--f)), 1.4rem);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--cream);
+  transition: color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .footer-links a:hover {
+    color: var(--blue);
+  }
+}
+
+.footer-links a:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.footer-copy {
+  font-size: max(calc(32 * var(--f)), var(--text-small));
+  font-weight: 500;
+  line-height: var(--leading-ui);
+  color: var(--cream);
+}
+
+.footer-statement {
+  max-width: 24rem;
+  margin-top: max(calc(22 * var(--f)), 0.75rem);
+  font-size: max(calc(30 * var(--f)), var(--text-small));
+  font-weight: 500;
+  line-height: var(--leading-snug);
+  color: var(--cream);
+}
+
+/* the wordmark, big and centred, with a margin either side */
+.footer-wordmark {
+  display: block;
+  width: 86%;
+  height: auto;
+  margin: max(calc(120 * var(--f)), 2.25rem) auto 0;
+  object-fit: contain;
+}

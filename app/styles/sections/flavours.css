@@ -1,0 +1,193 @@
+/* Flavours — markup: components/sections/Flavours.js · motion: animations/flavours.js */
+
+/* ===================== Flavours ===================== */
+
+/* On orange, carrying on from the hero; the top padding clears the glossy
+   "OO" hanging down into it */
+.flavours-intro {
+  position: relative; /* for its stickers */
+  /* bottom: enough room after the arrows that the slider doesn't crowd the
+     checker border below, in proportion to the space above the heading */
+  padding: 17vw 0 clamp(4rem, 8vw, 7.5rem);
+  /* tucked a pixel under the hero, so no hairline shows where the two
+     oranges meet (the hero's height in vw lands on fractions of a pixel) */
+  margin-top: -1px;
+  text-align: center;
+  background-color: var(--orange);
+}
+
+/* ---------- The heading and its stickers ---------- */
+
+.flavours-titled {
+  padding-inline: var(--gutter);
+}
+
+/* Big, tightly set cream lines in the condensed heading face */
+.flavours-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2.8rem, 0.6rem + 9.4vw, 9rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: var(--tracking-display);
+  color: var(--cream);
+}
+
+/* (.sticker.x: styles/ui/stickers.css loads after this file, and its
+   .sticker width would otherwise win) */
+
+/* "SCOOP. SMILE. REPEAT" (components/ui/Sticker.js), stuck over the left
+   end of the last line */
+.sticker.sticker--flavours {
+  left: var(--gutter);
+  top: 80%;
+  width: clamp(64px, 12vw, 172px);
+  translate: -42% -44%;
+  z-index: 2;
+}
+
+/* The second sticker (/stickers/sticker2.png), above the top-right corner,
+   clear of the heading's letters. Placed with offsets from its own width
+   (--w), not translate: it pops on (animations/stickers.js), and GSAP's
+   transform replaces a CSS translate. */
+.sticker.sticker--flavours-right {
+  --w: clamp(72px, 13vw, 190px);
+  top: calc(var(--w) * -0.62);
+  right: calc(var(--gutter) - var(--w) * 0.55);
+  width: var(--w);
+  z-index: 2;
+}
+
+/* ---------- Flavour slider ---------- */
+
+.flavour-slider {
+  --bowl: 20vw; /* bowl width (set by animations/flavours.js) */
+  margin-top: clamp(2rem, 6vw, 5rem);
+  /* clips the bowls cut off at the screen sides */
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* Bowls are positioned by animations/flavours.js along the arc; the top
+   padding is room for the outer bowls, which sit higher */
+.flavour-track {
+  position: relative;
+  list-style: none;
+  height: calc(var(--bowl) * 1.18);
+  margin-top: 4vw;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.flavour-item {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--bowl);
+  text-align: center;
+  transform-origin: 50% 60%;
+}
+
+.flavour-item .flavour-bowl {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  pointer-events: none;
+  transition: scale 0.5s var(--ease-bounce);
+}
+
+@media (hover: hover) {
+  .flavour-item:hover .flavour-bowl {
+    scale: 1.05;
+  }
+}
+
+/* The name, small, centred under the bowl */
+.flavour-name {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 0.4rem;
+  overflow: visible;
+}
+
+.flavour-name text {
+  font-family: var(--font-display);
+  font-size: 15px; /* in the 200-wide viewBox, so it scales with the bowl */
+  fill: var(--blue);
+}
+
+/* longer names (over 16 characters) a little smaller */
+.flavour-name--long text {
+  font-size: 13px;
+}
+
+/* Round navy arrow buttons, centred under the bowls */
+.flavour-arrows {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: clamp(1rem, 3vw, 2.5rem);
+}
+
+.flavour-arrow {
+  display: grid;
+  place-items: center;
+  width: clamp(2.75rem, 4.8vw, 3.5rem);
+  aspect-ratio: 1;
+  padding: 0;
+  color: var(--cream);
+  background-color: var(--blue);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.25s ease, scale 0.2s ease;
+}
+
+.flavour-arrow svg {
+  width: 55%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* (not the section's orange, so the button never vanishes into it) */
+@media (hover: hover) {
+  .flavour-arrow:hover {
+    background-color: var(--mint);
+  }
+}
+
+.flavour-arrow:active {
+  scale: 0.92;
+}
+
+.flavour-arrow:focus-visible {
+  outline: 3px solid var(--cream);
+  outline-offset: 3px;
+}
+
+/* ===================== Phones ===================== */
+
+@media (max-width: 699px) {
+  /* the "OO" is much bigger here and hangs further in: more room before
+     the heading, so it and the sticker above it aren't squeezed against it */
+  .flavours-intro {
+    padding-top: 30vw;
+  }
+
+  /* the stickers tucked in, clear of the screen edges */
+  .sticker.sticker--flavours {
+    translate: -30% -40%;
+  }
+
+  .sticker.sticker--flavours-right {
+    --w: 21vw;
+    top: calc(var(--w) * -0.75);
+    right: calc(var(--gutter) - var(--w) * 0.2);
+  }
+}

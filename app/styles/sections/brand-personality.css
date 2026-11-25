@@ -1,0 +1,329 @@
+/* Brand Personality — markup: components/sections/BrandPersonality.js · motion: animations/joy.js */
+
+/* ===================== Brand Personality ===================== */
+
+/* Sized in vw, like the hero and Flavours, so the composition keeps its
+   proportions at any width; phones re-set the values below. */
+.joy {
+  --photo-h: 54vw; /* the photo band */
+  --heading-size: 10.5vw;
+  --badge-w: 11vw;
+  --cards-h: 47vw; /* the yellow band */
+  --card-w: 18vw;
+  --card-gap: -1.2vw; /* the cards overlap a little */
+  --crave-size: 15vw;
+  --curve: 9vw; /* how deep the yellow band's curved bottom dips */
+  position: relative;
+  overflow-x: clip;
+  /* Our Story's orange: shows only in the corners below the yellow band's
+     curved bottom, so the band curves straight into the next section */
+  background-color: var(--orange);
+}
+
+/* (The checker border along the top: app/styles/ui/checker.css) */
+
+/* ---------- The photo band ---------- */
+
+.joy-photo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: var(--photo-h);
+  padding: 5vw var(--gutter);
+  overflow: hidden; /* the photo drifts a little as the page scrolls */
+}
+
+/* The close-up of the ice cream, filling the band (a little taller than it,
+   for the drift: animations/joy.js) */
+.joy-photo-bg {
+  position: absolute;
+  left: 0;
+  top: -8%;
+  width: 100%;
+  height: 116%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.joy-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+/* The heading, its badge and its ticket, as one composition */
+.joy-titled {
+  position: relative;
+}
+
+/* Big yellow lines in the condensed heading face; a soft shadow keeps them
+   clear of the cream photo */
+.joy-heading {
+  font-family: var(--font-heading);
+  font-size: var(--heading-size);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: var(--tracking-display);
+  color: var(--yellow);
+  text-shadow: 0 0.03em 0.1em rgb(120 60 0 / 0.28);
+}
+
+/* Each line rises out of its own mask (animations/joy.js) */
+.joy-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.05em;
+}
+
+.joy-line > span {
+  display: inline-block;
+}
+
+/* The round teal badge sticker (/stickers/sticker1.png), over the start of
+   the second line. (Placed with
+   offsets, not translate: GSAP animates its transform, animations/joy.js.) */
+.joy-badge {
+  --badge-x: -0.75; /* × its width, from the heading's left edge: only its
+     right quarter overlaps the "o" of "of" */
+  position: absolute;
+  left: calc(var(--badge-w) * var(--badge-x));
+  top: 64%;
+  margin-top: calc(var(--badge-w) * -0.5);
+  width: var(--badge-w);
+  aspect-ratio: 1;
+  z-index: 2;
+  filter: drop-shadow(0 4px 8px rgb(16 32 112 / 0.22));
+}
+
+/* the sticker artwork, turned slowly by animations/joy.js */
+.joy-badge-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* The stickers (components/ui/Sticker.js) over the top-right corner, sized
+   from the heading so they scale with it. (.sticker.x: styles/ui/stickers.css
+   loads after this file, and its .sticker width would otherwise win.)
+   The teal zigzag (/stickers/sticker2.png), over the end of the first line
+   and sticking out past it; its artwork is already tilted */
+.sticker.joy-sticker {
+  top: calc(var(--heading-size) * -0.4);
+  right: calc(var(--heading-size) * -1.33);
+  width: calc(var(--heading-size) * 1.5);
+  z-index: 2;
+}
+
+/* the yellow "Scoop" oval (/stickers/sticker3.png), a little over half the
+   zigzag's width, stuck on its bottom-right corner and poking just past its
+   right edge, slightly tilted (rot, in BrandPersonality.js) */
+.sticker.joy-sticker-oval {
+  top: calc(var(--heading-size) * 0.13);
+  right: calc(var(--heading-size) * -1.45);
+  width: calc(var(--heading-size) * 0.84);
+  z-index: 3;
+}
+
+.joy-text {
+  max-width: 36vw;
+  margin-top: 1.6vw;
+  font-size: clamp(0.78rem, 0.4rem + 0.85vw, 1.15rem);
+  font-weight: 500;
+  line-height: var(--leading-snug);
+  color: var(--blue);
+}
+
+/* A small, square yellow button */
+.joy-cta {
+  display: inline-block;
+  margin-top: 2vw;
+  /* the same size as Our Story's button (styles/sections/our-story.css) */
+  padding: 0.65em 2em 0.55em;
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 0.6rem + 0.8vw, 1.4rem);
+  letter-spacing: 0.05em;
+  color: var(--blue);
+  background-color: var(--yellow);
+  border-radius: var(--radius-pill); /* every button on the site is a pill */
+  box-shadow: 0 3px 0 rgb(16 32 112 / 0.25);
+  transition: background-color 0.25s ease;
+}
+
+@media (hover: hover) {
+  .joy-cta:hover {
+    background-color: var(--orange);
+  }
+}
+
+.joy-cta:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ---------- The yellow band: cards over a giant line of type ---------- */
+
+/* The yellow band, its bottom a shallow downward curve (a half-ellipse
+   across the full width) over the next section's orange */
+.joy-cards {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: var(--cards-h);
+  padding-block: 5vw calc(5vw + var(--curve) * 0.5);
+  background-color: var(--yellow);
+  border-radius: 0 0 50% 50% / 0 0 var(--curve) var(--curve);
+}
+
+/* The line of type behind the cards: an endless marquee, faint orange, the
+   full width (animations/joy.js moves the track by one copy and loops) */
+.joy-crave {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  font-family: var(--font-heading);
+  font-size: var(--crave-size);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--orange);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.joy-crave-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* the gap between copies is part of each copy, so the loop stays seamless */
+.joy-crave-item {
+  padding-right: 0.35em;
+}
+
+.joy-card-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  list-style: none;
+}
+
+/* A card: a lifestyle photo filling it, on its tint. Its tilt (data-rot) is
+   set by animations/joy.js, which animates its transform. */
+.joy-card {
+  position: relative;
+  width: var(--card-w);
+  aspect-ratio: 4 / 5.2; /* the photos' shape */
+  margin-inline: calc(var(--card-gap) / 2);
+  border-radius: 0.6vw;
+  background-color: var(--tint);
+  box-shadow: 0 1vw 2vw rgb(16 32 112 / 0.22);
+}
+
+.joy-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  pointer-events: none; /* flicks are measured over the card itself */
+}
+
+/* A frosted-glass label stuck on a card, hanging off one edge. It's inside
+   the card, so it's thrown with it, but turned back by the card's tilt
+   (--rot) so it sits level at rest. It doesn't catch the pointer: flicks
+   are measured over the card itself. */
+.joy-card-label {
+  position: absolute;
+  padding: 0.75em 1.35em 0.7em;
+  font-family: var(--font-body);
+  font-size: max(1.3vw, 1.05rem);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--blue);
+  background: linear-gradient(115deg, rgb(255 255 255 / 0.6), rgb(255 248 233 / 0.28));
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  backdrop-filter: blur(10px) saturate(1.4);
+  border: 1px solid rgb(255 255 255 / 0.75);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0.5vw 1.4vw rgb(16 32 112 / 0.18), inset 0 1px 0 rgb(255 255 255 / 0.8);
+  rotate: calc(var(--rot) * -1deg);
+  pointer-events: none;
+}
+
+.joy-card--tl .joy-card-label {
+  top: 16%;
+  left: -14%;
+}
+
+.joy-card--tr .joy-card-label {
+  top: 11%;
+  right: -32%;
+}
+
+.joy-card--br .joy-card-label {
+  bottom: 13%;
+  right: -26%;
+}
+
+/* a label hanging off the right edge goes over the next card, so its card
+   sits above that one (the stacking stays fixed, thrown or not) */
+.joy-card--tr,
+.joy-card--br {
+  z-index: 1;
+}
+
+/* ===================== Phones ===================== */
+
+@media (max-width: 699px) {
+  .joy {
+    --photo-h: 120vw;
+    --heading-size: 15vw;
+    --badge-w: 18vw;
+    --cards-h: 70vw;
+    --card-w: 22vw; /* narrow enough for the type to show at the sides */
+    --card-gap: -2vw;
+    --crave-size: 17vw;
+  }
+
+  .joy-text {
+    max-width: 78vw;
+    margin-top: 4vw;
+  }
+
+  .joy-cta {
+    margin-top: 5vw;
+  }
+
+  /* no room beside the heading: the pair sits above its right end */
+  .sticker.joy-sticker {
+    top: -25vw;
+    right: -2vw;
+    width: 22vw;
+  }
+
+  .sticker.joy-sticker-oval {
+    top: -17vw;
+    right: -3.75vw;
+    width: 12.5vw;
+  }
+
+  .joy-badge {
+    --badge-x: -0.4; /* not as far out: it would run off the screen edge */
+  }
+
+  .joy-card {
+    border-radius: 1.5vw;
+  }
+
+  /* the cards are too small here for labels to fit */
+  .joy-card-label {
+    display: none;
+  }
+}

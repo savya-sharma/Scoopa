@@ -1,0 +1,139 @@
+/* The square wipe — markup: components/layout/PageTransition.js · motion: animations/pageTransition.js
+
+   Three full-screen layers, back to front: orange, teal, yellow. They swipe
+   up from the bottom to cover the page, and on up off the top to reveal the
+   next one. Only transforms are animated. */
+
+.wipe {
+  --wipe-yellow: #ffc928;
+  --wipe-teal: #16a995;
+  --wipe-orange: #ff4f9a; /* pink (brand --pink), so the last layer to lift off stands out from the orange hero */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh; /* the largest viewport, so it covers under mobile toolbars too */
+  z-index: var(--z-transition);
+  overflow: hidden;
+  pointer-events: none; /* idle: the layers are parked below the screen */
+}
+
+/* While a transition runs, nothing underneath can be clicked */
+.wipe[data-state="active"] {
+  pointer-events: auto;
+}
+
+/* A pixel of overlap top and bottom, so no hairline ever shows at an edge */
+.wipe-layer {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: calc(100% + 2px);
+  pointer-events: auto; /* blocks the page while on screen */
+  transform: translateY(101%); /* start state: below the screen */
+  will-change: transform;
+}
+
+/* The intro: the site opens with every layer on screen (yellow in front),
+   then they lift off; GSAP's inline transforms take over from here */
+.wipe[data-intro] .wipe-layer {
+  transform: none;
+}
+
+/* The layers' rounded edges: one half-ellipse in the layer's colour, the
+   same curve both ways so the loader and page changes match. Flat (scaleY 0)
+   at rest; animations/pageTransition.js stretches it while the layer moves.
+   Its size (one place for both): */
+.wipe-cap,
+.wipe-cap-top {
+  position: absolute;
+  left: -15%;
+  width: 130%;
+  height: 22vh;
+  background-color: inherit;
+  transform: scaleY(0);
+  will-change: transform;
+}
+
+/* The trailing end: hangs from the bottom edge (overlapping it by a
+   pixel), as the layer lifts off */
+.wipe-cap {
+  top: calc(100% - 1px);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  transform-origin: 50% 0;
+}
+
+/* The leading edge: the same curve on the top edge, mirrored, as the layer
+   sweeps up to cover the screen */
+.wipe-cap-top {
+  bottom: calc(100% - 1px);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  transform-origin: 50% 100%;
+}
+
+.wipe-layer--orange {
+  background-color: var(--wipe-orange);
+}
+
+.wipe-layer--teal {
+  background-color: var(--wipe-teal);
+}
+
+.wipe-layer--yellow {
+  background-color: var(--wipe-yellow);
+}
+
+/* ---------- Progress: a count and a thick bar, on the visible screen ---------- */
+
+/* The visible screen on the yellow layer, riding with it */
+.wipe-stage {
+  --wipe-bar-h: clamp(1rem, 2.2vh, 1.75rem); /* the bar's thickness */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh; /* the screen actually visible, toolbars and all */
+  pointer-events: none;
+}
+
+/* The count, bottom-left, sitting just above the bar */
+.wipe-count {
+  position: absolute;
+  left: var(--gutter);
+  bottom: calc(var(--wipe-bar-h) + 0.75rem);
+  display: flex;
+  align-items: baseline;
+  gap: 0.05em;
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums; /* the digits don't jitter as they change */
+  color: var(--blue);
+}
+
+.wipe-count-unit {
+  font-size: 0.5em;
+}
+
+/* The bar: the full width of the screen along its bottom edge; the fill
+   grows from the left (scaleX, set by animations/pageTransition.js) */
+.wipe-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--wipe-bar-h);
+  background-color: rgb(16 32 112 / 0.14); /* the empty track: navy, faint */
+}
+
+.wipe-bar-fill {
+  width: 100%;
+  height: 100%;
+  background-color: var(--blue);
+  transform-origin: 0 50%;
+  transform: scaleX(0); /* start state */
+  will-change: transform;
+}

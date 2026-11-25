@@ -1,0 +1,25 @@
+/* Checker border — two rows of alternating squares across the full width,
+   used between sections (Brand Personality, Our Story). Markup: a div with
+   class="checker". (The hero has its own: its squares draw across.) */
+
+.checker {
+  --check: 3.2vw; /* one square */
+  --c1: var(--orange);
+  --c2: var(--yellow);
+  height: calc(var(--check) * 2);
+  background:
+    conic-gradient(var(--c1) 25%, var(--c2) 0 50%, var(--c1) 0 75%, var(--c2) 0)
+    0 0 / calc(var(--check) * 2) calc(var(--check) * 2);
+}
+
+/* starts on the other colour (e.g. a section's bottom border, so the
+   pattern runs on from its top one) */
+.checker--shift {
+  background-position: var(--check) 0;
+}
+
+@media (max-width: 699px) {
+  .checker {
+    --check: 5vw;
+  }
+}

@@ -1,0 +1,69 @@
+/* Ticket sticker — markup: components/ui/Ticket.js (each section places it) */
+
+/* Zigzag ends: the middle solid, and down each end a column of triangular
+   teeth pointing outwards (each a 90° wedge of a cone, tile zig × 2·zig).
+   The badge sits in a wrapper-free corner, so the mask is on ::before. */
+.ticket {
+  --zig: clamp(5px, 0.6vw, 9px); /* depth of each zigzag tooth */
+  --ticket-bg: var(--yellow);
+  position: absolute;
+  display: grid;
+  gap: 0.3em;
+  padding: 0.7em calc(var(--zig) + 0.7em) 0.6em;
+  font-family: var(--font-display);
+  font-size: clamp(0.55rem, 0.3rem + 0.8vw, 1.1rem);
+  line-height: 1.05;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--cream);
+  isolation: isolate;
+  filter: drop-shadow(0 4px 6px rgb(16 32 112 / 0.18));
+}
+
+.ticket::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--ticket-bg);
+  -webkit-mask:
+    linear-gradient(#000 0 0) center / calc(100% - var(--zig) * 2 + 2px) 100% no-repeat,
+    conic-gradient(from 45deg at 0 50%, #000 90deg, #0000 0) left / var(--zig) calc(var(--zig) * 2) repeat-y,
+    conic-gradient(from -135deg at 100% 50%, #000 90deg, #0000 0) right / var(--zig) calc(var(--zig) * 2) repeat-y;
+  mask:
+    linear-gradient(#000 0 0) center / calc(100% - var(--zig) * 2 + 2px) 100% no-repeat,
+    conic-gradient(from 45deg at 0 50%, #000 90deg, #0000 0) left / var(--zig) calc(var(--zig) * 2) repeat-y,
+    conic-gradient(from -135deg at 100% 50%, #000 90deg, #0000 0) right / var(--zig) calc(var(--zig) * 2) repeat-y;
+}
+
+.ticket--teal {
+  --ticket-bg: var(--mint);
+}
+
+.ticket-big {
+  display: grid;
+}
+
+.ticket-small {
+  font-family: var(--font-body);
+  font-size: 0.55em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+
+/* A yellow oval stuck over the lower-right corner, the word in navy */
+.ticket-badge {
+  position: absolute;
+  right: -0.6em;
+  bottom: -0.55em;
+  padding: 0.25em 0.8em;
+  font-family: var(--font-display);
+  font-size: 0.8em;
+  text-transform: none;
+  color: var(--blue);
+  background-color: var(--yellow);
+  border: 0.12em solid var(--blue);
+  border-radius: 50%;
+  rotate: 8deg;
+}
